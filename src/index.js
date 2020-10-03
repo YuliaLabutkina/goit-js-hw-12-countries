@@ -22,9 +22,6 @@ const clearMarkup = () => {
 };
 
 const findCountry = (event) => {
-
-    console.log(event.target.value);
-
     clearMarkup();
 
     const request = new FetchCountries(event.target.value);
