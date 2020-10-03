@@ -1,0 +1,13 @@
+<h2 class="country-markup__name">{{name}}</h2>
+<div class="country-markup__wrapper">
+    <div class="country-markup__text-content-wrapper">
+      <p class="country-markup__capital">Сapital: {{capital}}</p>
+      <p class="country-markup__population">Population: {{population}}</p>
+      <ul class="country-markup__languages-list">Languages:
+        {{#each languages}}
+        <li>{{this.name}}</li>
+        {{/each}}
+      </ul>
+    </div>
+    <img class="country-markup__img-flag" src="{{flag}}" alt="flag {{name}}">
+</div>
