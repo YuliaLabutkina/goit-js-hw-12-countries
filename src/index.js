@@ -23,28 +23,30 @@ const clearMarkup = () => {
 
 const findCountry = (event) => {
     clearMarkup();
-
+    
     const request = new FetchCountries(event.target.value);
-    request.makeRequest().then(countries => {
+    if(event.target.value) {
+        request.makeRequest().then(countries => {
 
-        if(countries.length === 1) {
-            createCountryMarkup(countries)
-            return;
-        };
-
-        if(countries.length <= 10) {
-            createCountryList(countries);
-            return;
-        }
-
-        if(countries.status === 404) {
-            new error('No such country found! Try again!');
-            return;
-        }
-
-        new error('Too many matches found. Please a more specific query');
-
-    })
+            if(countries.length === 1) {
+                createCountryMarkup(countries)
+                return;
+            };
+    
+            if(countries.length <= 10) {
+                createCountryList(countries);
+                return;
+            }
+    
+            if(countries.status === 404) {
+                new error('No such country found! Try again!');
+                return;
+            }
+    
+            new error('Too many matches found. Please a more specific query');
+    
+        })
+    }
 };
 
 
