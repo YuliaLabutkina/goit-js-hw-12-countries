@@ -26,11 +26,7 @@ const findCountry = (event) => {
 
     if(event.target.value) {
         fetchCountries(event.target.value).then(countries => {
-
-            if (!countries) {
-                new error('No such country found! Try again!');
-                return;
-            };
+            if (!countries) return;
 
             if(countries.length === 1) {
                 createCountryMarkup(countries)
@@ -39,6 +35,15 @@ const findCountry = (event) => {
     
             if(countries.length <= 10) {
                 createCountryList(countries);
+
+                ref.countriesListRef.addEventListener('click', (event) => {
+                    
+                    fetchCountries(event.target.textContent).then(countries => {
+                        clearMarkup();
+                       return createCountryMarkup(countries);
+                    });
+                })
+
                 return;
             };
 

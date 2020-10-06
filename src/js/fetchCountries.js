@@ -7,11 +7,11 @@ const fetchCountries = (searchQuery) => {
     return fetch(url).then(response => {
 
         if (!response.ok) {
-            throw new error('No such country found! Try again!')
-        }
+            throw ('No such country found! Try again!')
+        } 
         return response.json()
     }).catch( err => {
-        new error('No such country found! Try again!');
+        new error(err);
     });
 }
 
