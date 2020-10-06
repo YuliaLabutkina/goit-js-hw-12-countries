@@ -1,24 +1,18 @@
-class FetchCountries {
-    constructor(searchQuery) {
-        this.url = `https://restcountries.eu/rest/v2/name/${searchQuery}`
-    };
-    
-    makeRequest = () => {;
-       return fetch(this.url).then(res => res.json()).then(countries => {
-            return countries
-        });
-    } 
-    
+import error from './plugin-pnotify';
+
+
+const fetchCountries = (searchQuery) => {
+    const url = `https://restcountries.eu/rest/v2/name/${searchQuery}`
+
+    return fetch(url).then(response => {
+
+        if (!response.ok) {
+            throw new error('No such country found! Try again!')
+        }
+        return response.json()
+    }).catch( err => {
+        new error('No such country found! Try again!');
+    });
 }
 
-export default FetchCountries;
-
-
-// const fetchCountries = (searchQuery) => {
-//     const url = `https://restcountries.eu/rest/v2/name/${searchQuery}`
-
-//     return fetch(url).then(res => res.json()).then(countries => {
-//         return countries
-//     });
-
-// }
+export default fetchCountries;
