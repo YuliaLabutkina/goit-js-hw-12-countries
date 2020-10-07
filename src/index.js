@@ -11,48 +11,52 @@ const createCountryMarkup = (countries) => {
     ref.countryMarkupRef.insertAdjacentHTML('beforeend', markupCountry);
 };
 
+
 const createCountryList = (countries) => {
     const markupCountriesList = countries.reduce((acc, el) => acc + `<li>${el.name}</li>`, '');
     ref.countriesListRef.insertAdjacentHTML('beforeend', markupCountriesList);
 };
+
 
 const clearMarkup = () => {
     ref.countryMarkupRef.innerHTML = '';
     ref.countriesListRef.innerHTML = '';
 };
 
+
 const findCountry = (event) => {
     clearMarkup();
+    const requestedCountry = event.target;
+    if(!requestedCountry.value) return;
 
-    if(event.target.value) {
-        fetchCountries(event.target.value).then(countries => {
-            if (!countries) return;
+    fetchCountries(requestedCountry.value).then(countries => {
+        if (!countries) return;
 
-            if(countries.length === 1) {
-                createCountryMarkup(countries)
-                return;
-            };
+        if(countries.length === 1) {
+            createCountryMarkup(countries)
+            return;
+        };
     
-            if(countries.length <= 10) {
-                createCountryList(countries);
+        if(countries.length <= 10) {
+            createCountryList(countries);
 
-                ref.countriesListRef.addEventListener('click', (event) => {
-                    
-                    fetchCountries(event.target.textContent).then(countries => {
-                        clearMarkup();
-                       return createCountryMarkup(countries);
-                    });
-                })
+            ref.countriesListRef.addEventListener('click', (event) => {
 
-                return;
-            };
+                fetchCountries(event.target.textContent).then(countries => {
+                    clearMarkup();
+                    requestedCountry.value = '';
+                    createCountryMarkup(countries);
+                });
+            })
 
-            if(countries.length > 10) {
-                new error('Too many matches found. Please a more specific query');
-                return;
-            }
-        })
-    }
+            return;
+        };
+
+        if(countries.length > 10) {
+            new error('Too many matches found. Please a more specific query');
+            return;
+        }
+    })
 };
 
 
