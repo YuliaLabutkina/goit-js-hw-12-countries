@@ -1,4 +1,4 @@
-import error from './plugin-pnotify';
+import { error } from './plugin-pnotify';
 
 
 const fetchCountries = (searchQuery) => {

@@ -1,6 +1,6 @@
 import './styles.css'
 import _ from 'lodash';
-import error from './js/plugin-pnotify';
+import { error, success } from './js/plugin-pnotify';
 import ref from './js/ref';
 import countryMarkup from './template/country-markup.hbs';
 import fetchCountries from './js/fetchCountries';
@@ -9,6 +9,7 @@ import fetchCountries from './js/fetchCountries';
 const createCountryMarkup = (countries) => {
     const markupCountry = countries.reduce((acc, el) => acc + countryMarkup(el), '');
     ref.countryMarkupRef.insertAdjacentHTML('beforeend', markupCountry);
+    new success(`Congratulations! You have found the country ${countries[0].name}!`)
 };
 
 
@@ -27,7 +28,7 @@ const clearMarkup = () => {
 const findCountry = (event) => {
     clearMarkup();
     const requestedCountry = event.target;
-    if(!requestedCountry.value) return;
+    if(!requestedCountry.value.trim()) return;
 
     fetchCountries(requestedCountry.value).then(countries => {
         if (!countries) return;
