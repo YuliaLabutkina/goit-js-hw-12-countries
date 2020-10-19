@@ -11,7 +11,11 @@ const fetchCountries = (searchQuery) => {
         } 
         return response.json()
     }).catch( err => {
-        new error(`An error has occurred! ${err}`);
+        new error({
+            title: 'An error has occurred!',
+            text: `${err}`,
+            delay: 1500, 
+        });
     });
 }
 

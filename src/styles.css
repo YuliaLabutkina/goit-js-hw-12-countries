@@ -41,3 +41,32 @@ ul.country-markup__languages-list {
   max-width: 40%;
   height: auto;
 }
+
+.countries-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.country-markup__list-item {
+  cursor: pointer;
+  padding: 4px 10px 4px 10px;
+  border: 2px solid;
+  border-radius: 25%;
+  background-color: blueviolet;
+
+}
+
+.country-markup__list-item:not(:last-child) {
+  margin-bottom: 10px;
+}
+
+
+input {
+	width: 300px;
+	font-size: 13px;
+	padding: 6px 0 4px 10px;
+	border: 1px solid blueviolet;
+	background: #F6F6f6;
+	border-radius: 8px;
+}

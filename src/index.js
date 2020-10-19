@@ -9,12 +9,16 @@ import fetchCountries from './js/fetchCountries';
 const createCountryMarkup = (countries) => {
     const markupCountry = countries.reduce((acc, el) => acc + countryMarkup(el), '');
     ref.countryMarkupRef.insertAdjacentHTML('beforeend', markupCountry);
-    new success(`Congratulations! You have found the country ${countries[0].name}!`)
+    new success({
+        title: 'Congratulations!',
+        text: `You have found the country ${countries[0].name}!`,
+        delay: 1500, 
+    })
 };
 
 
 const createCountryList = (countries) => {
-    const markupCountriesList = countries.reduce((acc, el) => acc + `<li>${el.name}</li>`, '');
+    const markupCountriesList = countries.reduce((acc, el) => acc + `<li class="country-markup__list-item">${el.name}</li>`, '');
     ref.countriesListRef.insertAdjacentHTML('beforeend', markupCountriesList);
 };
 
@@ -23,6 +27,10 @@ const clearMarkup = () => {
     ref.countryMarkupRef.innerHTML = '';
     ref.countriesListRef.innerHTML = '';
 };
+
+const clearInput= () => {
+    ref.inputCountrySearchRef.value = '';
+}
 
 
 const findCountry = (event) => {
@@ -34,7 +42,8 @@ const findCountry = (event) => {
         if (!countries) return;
 
         if(countries.length === 1) {
-            createCountryMarkup(countries)
+            createCountryMarkup(countries);
+            clearInput();
             return;
         };
     
@@ -45,7 +54,7 @@ const findCountry = (event) => {
 
                 fetchCountries(event.target.textContent).then(countries => {
                     clearMarkup();
-                    requestedCountry.value = '';
+                    clearInput();
                     createCountryMarkup(countries);
                 });
             })
@@ -54,7 +63,11 @@ const findCountry = (event) => {
         };
 
         if(countries.length > 10) {
-            new error('Too many matches found. Please a more specific query');
+            new error({
+                title: 'Error!',
+                text: 'Too many matches found. Please a more specific query',
+                delay: 1500, 
+            });
             return;
         }
     })
